@@ -1,0 +1,9 @@
+version: '3'
+services:
+  py:
+    build:
+      context: ./app
+    volumes:
+      - ./app:/app
+      - ./dev-local:/root
+    command: bash
