@@ -17,8 +17,7 @@ RUN buildDeps=' \
     rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
-COPY Pipfile ./Pipfile
-COPY Pipfile.lock ./Pipfile.lock
+COPY . /app
 RUN \
     pip install --upgrade pip &&\
     pip install pipenv &&\
