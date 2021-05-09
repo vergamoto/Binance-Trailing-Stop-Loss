@@ -7,5 +7,7 @@ services:
       - ./app:/app
       - ./.dev-local/home:/root
     working_dir: /app
+    env_file:
+      - ./.dev-local/home/.env
     command: bash
 

@@ -1,7 +1,8 @@
+import os
 import ccxt
-from binance import Binance
-import config
 import time
+
+from binance import Binance
 
 # PLEASE CONFIGURE API DETAILS IN config.py
 
@@ -9,8 +10,8 @@ class StopTrail():
 
     def __init__(self, market, type, stopsize, interval):
         self.binance = Binance(
-            api_key=config.API_DETAILS['API_KEY'],
-            api_secret=config.API_DETAILS['API_SECRET']
+            api_key=os.environ.get('API_KEY'),
+            api_secret=os.environ.get('API_SECRET')
         )
         self.market = market
         self.type = type
