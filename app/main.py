@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 from trail import StopTrail
 import argparse
 
