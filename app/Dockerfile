@@ -16,9 +16,13 @@ RUN buildDeps=' \
     apt-get install -y --no-install-recommends $buildDeps && \
     rm -rf /var/lib/apt/lists/*
 
-# RUN pip install pipenv
-# COPY Pipfile ./Pipfile
-# COPY Pipfile.lock ./Pipfile.lock
+WORKDIR /app
+COPY Pipfile ./Pipfile
+COPY Pipfile.lock ./Pipfile.lock
+RUN \
+    pip install --upgrade pip &&\
+    pip install pipenv &&\
+    pipenv install --system --deploy
 
 # RUN useradd --create-home appuser
 # USER appuser
