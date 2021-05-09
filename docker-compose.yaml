@@ -5,5 +5,7 @@ services:
       context: ./app
     volumes:
       - ./app:/app
-      - ./dev-local:/root
+      - ./.dev-local/home:/root
+    working_dir: /app
     command: bash
+
