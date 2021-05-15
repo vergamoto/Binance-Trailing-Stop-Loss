@@ -1,8 +1,8 @@
 import os
-import ccxt
 import time
 
 from binance import Binance
+
 
 class StopTrail():
 
