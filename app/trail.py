@@ -4,18 +4,16 @@ import time
 
 from binance import Binance
 
-# PLEASE CONFIGURE API DETAILS IN config.py
-
 class StopTrail():
 
-    def __init__(self, market, type, stopsize, interval):
+    def __init__(self, market, order_type, stop_size, interval):
         self.binance = Binance(
             api_key=os.environ.get('API_KEY'),
             api_secret=os.environ.get('API_SECRET')
         )
         self.market = market
-        self.type = type
-        self.stopsize = stopsize
+        self.type = order_type
+        self.stopsize = stop_size
         self.interval = interval
         self.running = False
         self.stoploss = self.initialize_stop()
