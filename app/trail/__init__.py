@@ -1,7 +1,7 @@
 import os
 import time
 
-from binance import Binance
+from .binance import Binance
 
 
 class StopTrail():
