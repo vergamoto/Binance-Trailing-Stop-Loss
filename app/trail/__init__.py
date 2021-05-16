@@ -3,6 +3,9 @@ import time
 
 from .binance import Binance
 
+import logging
+logger = logging.getLogger('stoptrail')
+
 
 class StopTrail():
 
@@ -29,38 +32,32 @@ class StopTrail():
         if self.type == "sell":
             if (price - self.stopsize) > self.stoploss:
                 self.stoploss = price - self.stopsize
-                print("New high observed: Updating stop loss to %.8f" % self.stoploss)
+                logger.info(f"Current Price: {price:.8f}. Update stop loss to {self.stoploss:.8f}.")
             elif price <= self.stoploss:
                 self.running = False
                 amount = self.binance.get_balance(self.market.split("/")[0])
                 price = self.binance.get_price(self.market)
                 self.binance.sell(self.market, amount, price)
-                print("Sell triggered | Price: %.8f | Stop loss: %.8f" % (price, self.stoploss))
+                logger.warn("Sell triggered | Price: %.8f | Stop loss: %.8f" % (price, self.stoploss))
         elif self.type == "buy":
             if (price + self.stopsize) < self.stoploss:
                 self.stoploss = price + self.stopsize
-                print("New low observed: Updating stop loss to %.8f" % self.stoploss)
+                logger.info("New low observed: Updating stop loss to %.8f" % self.stoploss)
             elif price >= self.stoploss:
                 self.running = False
                 balance = self.binance.get_balance(self.market.split("/")[1])
                 price = self.binance.get_price(self.market)
                 amount = (balance / price) * 0.999 # 0.10% maker/taker fee without BNB
                 self.binance.buy(self.market, amount, price)
-                print("Buy triggered | Price: %.8f | Stop loss: %.8f" % (price, self.stoploss))
+                logger.warn("Buy triggered | Price: %.8f | Stop loss: %.8f" % (price, self.stoploss))
 
-    def print_status(self):
+    def status(self):
         last = self.binance.get_price(self.market)
-        print("---------------------")
-        print("Trail type: %s" % self.type)
-        print("Market: %s" % self.market)
-        print("Stop loss: %.8f" % self.stoploss)
-        print("Last price: %.8f" % last)
-        print("Stop size: %.8f" % self.stopsize)
-        print("---------------------")
+        return f"type: {self.type}, market: {self.market}, last: {last:.8f}, stop: {self.stoploss:.8f}"
 
     def run(self):
         self.running = True
         while (self.running):
-            self.print_status()
+            logger.info(self.status())
             self.update_stop()
             time.sleep(self.interval)

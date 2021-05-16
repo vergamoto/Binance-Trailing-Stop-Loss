@@ -16,6 +16,6 @@ services:
 
   trade:
     <<: *python_defaults
-    # command: |
-    #   --symbol=CAKE/USDT --size=3 --type=sell
+    command: |
+      --symbol=CAKE/USDT --size=3 --type=sell
 

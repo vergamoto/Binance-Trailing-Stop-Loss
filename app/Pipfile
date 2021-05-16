@@ -5,6 +5,7 @@ name = "pypi"
 
 [packages]
 ccxt = "==1.49.64"
+PyYaml = "==5.4.1"
 
 [dev-packages]
 
