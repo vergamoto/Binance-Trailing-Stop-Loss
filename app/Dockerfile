@@ -23,5 +23,6 @@ RUN \
     pip install pipenv &&\
     pipenv install --system --deploy
 
-# RUN useradd --create-home appuser
-# USER appuser
+RUN useradd --create-home appuser
+USER appuser
+ENTRYPOINT [ "./main.py" ]

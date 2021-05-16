@@ -1,6 +1,6 @@
 version: '3'
 services:
-  py:
+  python_defaults: &python_defaults
     build:
       context: ./app
     volumes:
@@ -9,5 +9,13 @@ services:
     working_dir: /app
     env_file:
       - ./.dev-local/home/.env
-    command: bash
+
+  py:
+    <<: *python_defaults
+    entrypoint: bash
+
+  trade:
+    <<: *python_defaults
+    # command: |
+    #   --symbol=CAKE/USDT --size=3 --type=sell
 
